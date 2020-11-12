@@ -26,4 +26,10 @@ public class AppController {
         System.out.println("Register: " + username);
         return ResponseEntity.ok().build();
     }
+
+    @MessageMapping("/notify/{group}")
+    public void sendNotification(@DestinationVariable String group, Message message) {
+        System.out.println("Handling notification " + message + " to group: " + group);
+        simpMessagingTemplate.convertAndSend("/topic/notify/" + group, message);
+    }
 }
